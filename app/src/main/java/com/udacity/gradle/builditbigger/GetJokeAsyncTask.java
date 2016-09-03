@@ -3,6 +3,8 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ProgressBar;
 
 
 import com.example.ishan.jokr.backend.jokr.Jokr;
@@ -20,9 +22,11 @@ import java.io.IOException;
 public class GetJokeAsyncTask extends AsyncTask<Void, Void, String>{
     private static Jokr jokrService = null;
     private Context context;
+    private View view;
 
-    public GetJokeAsyncTask(Context context){
+    public GetJokeAsyncTask(Context context, View view){
         this.context = context;
+        this.view = view;
     }
 
     @Override
@@ -57,5 +61,7 @@ public class GetJokeAsyncTask extends AsyncTask<Void, Void, String>{
         displayJokeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         displayJokeIntent.putExtra("JOKE_IN", result);
         context.startActivity(displayJokeIntent);
+
+        ((ProgressBar)view).setVisibility(View.GONE);
     }
 }

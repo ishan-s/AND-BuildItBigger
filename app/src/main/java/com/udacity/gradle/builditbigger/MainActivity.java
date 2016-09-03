@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.Jokr;
 
@@ -55,14 +56,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view) {
-        Jokr jokr = new Jokr();
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarJoke);
+        progressBar.setVisibility(View.VISIBLE);
 
-        /*
-        Intent jokeDisplayIntent = new Intent(this, JokrActivity.class);
-        jokeDisplayIntent.putExtra("JOKE_IN", jokr.getJoke());
-        startActivity(jokeDisplayIntent);
-        */
-        new GetJokeAsyncTask(getApplicationContext()).execute();
+        Jokr jokr = new Jokr();
+        new GetJokeAsyncTask(getApplicationContext(), progressBar).execute();
 
         //Toast.makeText(this, jokr.getJoke(), Toast.LENGTH_SHORT).show();
     }

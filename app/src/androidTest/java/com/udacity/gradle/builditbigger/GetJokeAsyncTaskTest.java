@@ -1,6 +1,5 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
 
 import java.util.concurrent.ExecutionException;

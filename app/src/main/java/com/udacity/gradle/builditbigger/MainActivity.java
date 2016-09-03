@@ -1,17 +1,12 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.Jokr;
-import com.example.jokr.JokrActivity;
 
 
 public class MainActivity extends ActionBarActivity {

@@ -1,20 +1,14 @@
 package com.udacity.gradle.builditbigger;
 
-import android.app.SharedElementCallback;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.util.Pair;
-import android.widget.Toast;
 
 
 import com.example.ishan.jokr.backend.jokr.Jokr;
 import com.example.jokr.JokrActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClient;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 

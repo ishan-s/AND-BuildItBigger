@@ -32,8 +32,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.2.0'
-    // Added for AdMob
-    compile 'com.google.android.gms:play-services-ads:9.4.0'
+    // Added for AdMob - Using freeCompile to make sure dependency is only used for free version
+    freeCompile 'com.google.android.gms:play-services-ads:9.4.0'
+
     compile project(path: ':libjokr')
     compile project(path: ':jokrUI')
     compile project(path: ':jokrBackend', configuration:'android-endpoints')

@@ -12,25 +12,15 @@ import com.example.Jokr;
 
 public class MainActivity extends ActionBarActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*        SharedPreferences.OnSharedPreferenceChangeListener sharedPrefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-                Log.i("$$$DEBUG$$$", "onSharedPreferenceChanged");
-                Intent displayJokeIntent = new Intent(getApplicationContext(), JokrActivity.class);
-                displayJokeIntent.putExtra("JOKE_IN", sharedPreferences.getString("JOKE_IN", "Error fetching joke!"));
-                startActivity(displayJokeIntent);
-            }
-        };
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPrefListener);
-        */
     }
+
 
 
     @Override
@@ -56,13 +46,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view) {
+
+        //Show the spinner
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBarJoke);
         progressBar.setVisibility(View.VISIBLE);
 
-        Jokr jokr = new Jokr();
-        new GetJokeAsyncTask(getApplicationContext(), progressBar).execute();
+        //Execute the AsyncTask to load the joke, the task will launch the activity onPostExecute
+        new GetJokeAsyncTask(getApplicationContext(), progressBar, true).execute();
 
-        //Toast.makeText(this, jokr.getJoke(), Toast.LENGTH_SHORT).show();
     }
 
 

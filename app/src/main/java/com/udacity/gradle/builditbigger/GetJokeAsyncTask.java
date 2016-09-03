@@ -23,10 +23,12 @@ public class GetJokeAsyncTask extends AsyncTask<Void, Void, String>{
     private static Jokr jokrService = null;
     private Context context;
     private View view;
+    private boolean doLaunchActivity;
 
-    public GetJokeAsyncTask(Context context, View view){
+    public GetJokeAsyncTask(Context context, View view, boolean doLaunchActivity){
         this.context = context;
         this.view = view;
+        this.doLaunchActivity = doLaunchActivity;
     }
 
     @Override
@@ -57,11 +59,14 @@ public class GetJokeAsyncTask extends AsyncTask<Void, Void, String>{
     protected void onPostExecute(String result) {
         //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
 
-        Intent displayJokeIntent = new Intent(context, JokrActivity.class);
-        displayJokeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        displayJokeIntent.putExtra("JOKE_IN", result);
-        context.startActivity(displayJokeIntent);
+        if(doLaunchActivity) {
+            Intent displayJokeIntent = new Intent(context, JokrActivity.class);
+            displayJokeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            displayJokeIntent.putExtra("JOKE_IN", result);
+            context.startActivity(displayJokeIntent);
+        }
 
-        ((ProgressBar)view).setVisibility(View.GONE);
+        if(view!=null && view instanceof ProgressBar)
+            ((ProgressBar)view).setVisibility(View.GONE);
     }
 }

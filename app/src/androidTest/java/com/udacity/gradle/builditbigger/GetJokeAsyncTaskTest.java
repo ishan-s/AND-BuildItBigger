@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class GetJokeAsyncTaskTest extends AndroidTestCase {
     public void testGetJokeNotNull() {
-        GetJokeAsyncTask task = new GetJokeAsyncTask(getContext());
+        GetJokeAsyncTask task = new GetJokeAsyncTask(getContext(), null, false);
         task.execute();
 
         String result = null;

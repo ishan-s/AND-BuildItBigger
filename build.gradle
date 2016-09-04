@@ -17,3 +17,39 @@ allprojects {
         jcenter()
     }
 }
+
+task startAppEngine () {
+    dependsOn ":jokrBackend:appengineRun"
+
+    //Help taken from following sources for running the AppEngine in daemon mode
+    //- http://stackoverflow.com/questions/31434928/android-gradle-task-google-appengine
+    //- https://github.com/GoogleCloudPlatform/gradle-appengine-plugin#convention-properties
+    project(":jokrBackend").afterEvaluate { jokrBackend ->
+        jokrBackend.extensions.appengine.daemon = true
+    }
+    doLast {
+        println "AppEngine server started!!!"
+    }
+
+}
+
+task stopAppEngine {
+    dependsOn ":jokrBackend:appengineStop"
+    doLast {
+        println "AppEngine server stopped!!!"
+    }
+}
+
+task runConnectedTests {
+    dependsOn ":app:connectedCheck"
+    mustRunAfter startAppEngine
+    finalizedBy stopAppEngine
+    doLast {
+        println "Connected tests run finished."
+    }
+}
+
+//Central task to start the AppEngine/GCE Dev server, run connected/android tests, and then stop the server
+task doTest {
+    dependsOn startAppEngine, runConnectedTests, stopAppEngine
+}

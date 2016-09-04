@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger.free;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -33,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBarJoke);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //test ad unit id
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id)); //test ad unit id
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -46,22 +47,21 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void displayJokeActivity() {
-        try {
 
-            //Test if ad was closed before the joke got loaded..
-            while ((fetchedJoke=getJokesTask.get()) == null) {
-                //Joke not fetched yet, can't do anything other than just show the spinner and wait..
-                if(progressBar.getVisibility()==View.GONE)
-                    progressBar.setVisibility(View.VISIBLE);
-            }
+        //Test if ad was closed before the joke got loaded..
+        if(getJokesTask.getStatus()== AsyncTask.Status.RUNNING) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        try {
+            //This will result in a blocking call till the joke is fetched if the ad was closed before the joke got fetched
+            //In the normal flows this works as expected.
+            fetchedJoke = getJokesTask.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-        //Joke fetched now.. proceed with hiding the spinner & launching the activity
-        progressBar.setVisibility(View.GONE);
 
         Intent displayJokeActivityIntent = new Intent(this, JokrActivity.class);
         displayJokeActivityIntent.putExtra("JOKE_IN", fetchedJoke);
@@ -104,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
             mInterstitialAd.show();
 
         // For Free version with Interstital ads, joke activity should not be launched by the AsyncTask itself but on closing of the ad
-        getJokesTask = new GetJokeAsyncTask(getApplicationContext(), null, false);
+        getJokesTask = new GetJokeAsyncTask(getApplicationContext(), progressBar, false);
         getJokesTask.execute();
 
     }

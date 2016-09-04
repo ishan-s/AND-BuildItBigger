@@ -66,7 +66,10 @@ public class GetJokeAsyncTask extends AsyncTask<Void, Void, String>{
             context.startActivity(displayJokeIntent);
         }
 
-        if(view!=null && view instanceof ProgressBar)
-            ((ProgressBar)view).setVisibility(View.GONE);
+        if(view!=null) {
+            view = (ProgressBar) view;
+            if(view.getVisibility()==View.VISIBLE)
+                ((ProgressBar) view).setVisibility(View.GONE);
+        }
     }
 }
